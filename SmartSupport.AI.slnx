@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="SmartSupport.API/SmartSupport.API.csproj" />
+  <Project Path="SmartSupport.Application/SmartSupport.Application.csproj" />
+  <Project Path="SmartSupport.Domain/SmartSupport.Domain.csproj" />
+  <Project Path="SmartSupport.Infrastructure/SmartSupport.Infrastructure.csproj" />
+</Solution>
