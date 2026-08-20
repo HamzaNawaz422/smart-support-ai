@@ -24,6 +24,8 @@ namespace SmartSupport.Infrastructure.AI
 
             _kernel = builder.Build();
             _kernel.Plugins.AddFromType<ShipmentPlugin>();
+
+
         }
 
         public async Task<string> GetAnswerAsync(string question)
@@ -41,7 +43,8 @@ namespace SmartSupport.Infrastructure.AI
                 FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
             };
 
-            var result = await _kernel.InvokePromptAsync(prompt, new KernelArguments(executionSettings));
+            var result = await _kernel.InvokePromptAsync
+                (prompt, new KernelArguments(executionSettings));
 
             return result.ToString();
         }

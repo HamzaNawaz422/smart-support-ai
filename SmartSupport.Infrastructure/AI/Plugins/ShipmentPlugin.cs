@@ -20,5 +20,28 @@ namespace SmartSupport.Infrastructure.AI.Plugins
                 _=>"Shipment was not found."
             };
         }
+
+
+        [KernelFunction]
+        [Description("Gets all shipments that have the specified shipment status.")]
+        public List<string> GetShipmentsByStatus(
+        [Description("The shipment status, for example: in transit, out for delivery, or delivered")]
+        string status)
+        {
+            var shipments = new Dictionary<string, string>
+        {
+            { "SKY123", "Out for delivery" },
+            { "SKY456", "In transit" },
+            { "SKY789", "Delivered" },
+            { "SKY999", "Out for delivery" }
+        };
+
+            return shipments
+                .Where(x => x.Value.Equals(
+                    status,
+                    StringComparison.OrdinalIgnoreCase))
+                .Select(x => x.Key)
+                .ToList();
+        }
     }
 }
