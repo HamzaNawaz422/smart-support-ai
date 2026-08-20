@@ -10,6 +10,7 @@ namespace SmartSupport.Api.Controllers
     {
         private readonly IAiAssistantService _aiAssistantService;
 
+
         public AiController(IAiAssistantService aiAssistantService)
         {
             _aiAssistantService = aiAssistantService;

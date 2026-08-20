@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 using SmartSupport.Application.Interfaces;
+using SmartSupport.Infrastructure.AI.Plugins;
 using SmartSupport.Infrastructure.Configuration;
 
 namespace SmartSupport.Infrastructure.AI
@@ -21,6 +23,7 @@ namespace SmartSupport.Infrastructure.AI
                 apiKey: _settings.ApiKey);
 
             _kernel = builder.Build();
+            _kernel.Plugins.AddFromType<ShipmentPlugin>();
         }
 
         public async Task<string> GetAnswerAsync(string question)
@@ -33,7 +36,12 @@ namespace SmartSupport.Infrastructure.AI
                 {question}
                 """;
 
-            var result = await _kernel.InvokePromptAsync(prompt);
+            var executionSettings = new OpenAIPromptExecutionSettings
+            {
+                FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+            };
+
+            var result = await _kernel.InvokePromptAsync(prompt, new KernelArguments(executionSettings));
 
             return result.ToString();
         }
