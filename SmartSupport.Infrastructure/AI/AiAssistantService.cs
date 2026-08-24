@@ -19,20 +19,20 @@ namespace SmartSupport.Infrastructure.AI
 
         public async Task<AskResponseDto> AskAsync(AskRequestDto request)
         {
-            var cacheKey = Caching.CacheKeyHelper.GenerateQuestionCacheKey(request.Question);
+            //var cacheKey = Caching.CacheKeyHelper.GenerateQuestionCacheKey(request.Question);
 
-            var cachedValue = await _cacheService.GetAsync(cacheKey);
+            //var cachedValue = await _cacheService.GetAsync(cacheKey);
 
-            if (!string.IsNullOrWhiteSpace(cachedValue))
-            {
-                var cachedResponse = JsonSerializer.Deserialize<AskResponseDto>(cachedValue);
+            //if (!string.IsNullOrWhiteSpace(cachedValue))
+            //{
+            //    var cachedResponse = JsonSerializer.Deserialize<AskResponseDto>(cachedValue);
 
-                if (cachedResponse is not null)
-                {
-                    cachedResponse.IsCached = true;
-                    return cachedResponse;
-                }
-            }
+            //    if (cachedResponse is not null)
+            //    {
+            //        cachedResponse.IsCached = true;
+            //        return cachedResponse;
+            //    }
+            //}
 
             var answer = await _aiKernelService.GetAnswerAsync(request.Question);
 
@@ -46,7 +46,7 @@ namespace SmartSupport.Infrastructure.AI
 
             var serializedResponse = JsonSerializer.Serialize(response);
 
-            await _cacheService.SetAsync(cacheKey, serializedResponse, TimeSpan.FromHours(1));
+            //await _cacheService.SetAsync(cacheKey, serializedResponse, TimeSpan.FromHours(1));
 
             return response;
         }

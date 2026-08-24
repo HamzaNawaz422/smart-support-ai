@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SmartSupport.Application.Interfaces;
 using SmartSupport.Infrastructure.AI;
+using SmartSupport.Infrastructure.AI.Embeddings;
+using SmartSupport.Infrastructure.AI.Plugins;
 using SmartSupport.Infrastructure.Caching;
 using SmartSupport.Infrastructure.Configuration;
 using StackExchange.Redis;
@@ -32,6 +34,9 @@ namespace SmartSupport.Infrastructure.DependencyInjection
             services.AddScoped<ICacheService, RedisCacheService>();
             services.AddScoped<IAiKernelService, SemanticKernelService>();
             services.AddScoped<IAiAssistantService, AiAssistantService>();
+            services.AddScoped<IShipmentService, ShipmentService>();
+            services.AddScoped<ShipmentPlugin>();
+            services.AddScoped<IEmbeddingService, OpenAiEmbeddingService>();
 
             return services;
         }

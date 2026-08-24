@@ -11,8 +11,10 @@ namespace SmartSupport.Infrastructure.AI
     {
         private readonly Kernel _kernel;
         private readonly OpenAiSettings _settings;
+        private readonly IShipmentService _shipmentService;
 
-        public SemanticKernelService(IOptions<OpenAiSettings> options)
+        public SemanticKernelService(IOptions<OpenAiSettings> options, ShipmentPlugin shipmentPlugin,
+            IShipmentService shipmentService)
         {
             _settings = options.Value;
 
@@ -23,8 +25,11 @@ namespace SmartSupport.Infrastructure.AI
                 apiKey: _settings.ApiKey);
 
             _kernel = builder.Build();
-            _kernel.Plugins.AddFromType<ShipmentPlugin>();
-
+            _kernel.Plugins.AddFromObject(
+            shipmentPlugin,
+        "ShipmentPlugin");
+            //_kernel.Plugins.AddFromType<ShipmentPlugin>();
+            _shipmentService = shipmentService;
 
         }
 
