@@ -15,16 +15,24 @@ namespace SmartSupport.Infrastructure.AI.Embeddings
         {
             var settings = options.Value;
             _embeddingClient = new EmbeddingClient(
-                model: settings.Model,
+                model: settings.EmbeddingModel,
                 apiKey: settings.ApiKey);
         }
 
         public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
             string text)
         {
-            var result = await _embeddingClient.GenerateEmbeddingAsync(text);
+            try
+            {
+                var result = await _embeddingClient.GenerateEmbeddingAsync(text);
+                return result.Value.ToFloats();
+            }
+            catch (Exception ex)
+            {
 
-            return result.Value.ToFloats();
+                return null;
+            }
+            
         }
     }
 }
